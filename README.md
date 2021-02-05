@@ -37,7 +37,7 @@ la extensión PDO para tratar los procesos referentes a la base de datos y cooki
 para la autentificación de los usuarios de la web.
 
 # Licencia :page_facing_up:
-Este proyecto está bajo la Licencia Graphicscodeldv.
+Este proyecto está bajo la Licencia de Graphicscodeldv.
 # Menciones especiales :bomb:
 :hearts: A todo el personal y compañeros que han formado parte de esto.
 
