@@ -6,7 +6,7 @@ lo mas importante es el trato con nuestros clientes porque creemos firmemente qu
 y sencillez nos hacen brillar con luz propia. En nuestros inicios crecimos con una idea muy clara de lo que queriamos hacer
 y a donde queriamos llegar, a dia de hoy podemos mirar atras con orgullo porque hemos seguido la linea que nos propusimos 
 siempre intentado evolucionar y mejorar segun lo ha ido demandando el sector del desarrollo, cuando hablamos de Graphicscodeldv
-sin duda hablamos de compromiso, esfuerzo, dedicacion, trabajo y amor por lo que hacemos, eso es lo que ofrecemos.
+sin duda hablamos de compromiso, esfuerzo, dedicacion, trabajo y amor por lo que hacemos, eso es lo que ofrecemos y lo que nos define.
 # Instrucciones de uso / Instalación :bookmark_tabs:
 Actualmente sin definir.
 # Desarrollado con: :low_brightness:
