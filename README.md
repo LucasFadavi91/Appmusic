@@ -45,3 +45,7 @@ Este proyecto está bajo la Licencia de Graphicscodeldv.
 
 :hearts: Por supuesto a la competencia que nos ha ayudado e inspirado a mejorar y 
 a llegar donde estamos.
+
+# Contacto :email:
+
+lucas.fadavi@educa.madrid.org
