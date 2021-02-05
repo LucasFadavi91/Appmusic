@@ -5,7 +5,7 @@ En Graphicscodeldv creemos que pese a estar en un sector tan amplio, con tanta v
 lo mas importante es el trato con nuestros clientes porque creemos firmemente que nuestra transparencia, metodologia de trabajo
 y sencillez nos hacen brillar con luz propia. En nuestros inicios crecimos con una idea muy clara de lo que queriamos hacer
 y a donde queriamos llegar, a dia de hoy podemos mirar atras con orgullo porque hemos seguido la linea que nos propusimos 
-siempre intentado evolucionar y mejorar segun lo ha ido demandando el sector del desarrollo cuando hablamos de Graphicscodeldv
+siempre intentado evolucionar y mejorar segun lo ha ido demandando el sector del desarrollo, cuando hablamos de Graphicscodeldv
 sin duda hablamos de compromiso, esfuerzo, dedicacion, trabajo y amor por lo que hacemos, eso es lo que ofrecemos.
 # Instrucciones de uso / Instalación :bookmark_tabs:
 Actualmente sin definir.
