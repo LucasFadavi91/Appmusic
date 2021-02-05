@@ -15,7 +15,9 @@ estara basado en el modelo vista controlador.
 # Versionado :file_folder:
 Cada miembro del equipo de desarrollo se encargara de versionar y actualizar su propio codigo, 
 siendo posible en algun caso la implicacion de otro desarrollador/analista en caso de 
-que fuera necesario.
+que fuera necesario, se va a ir versionando el codigo en diferentes branchs que van a 
+corresponder con cada dia de trabajo/desarrollo del proyecto, la versión final estara 
+en el main.
 # Despliegue  :mailbox_closed:
 Por determinar.
 # Autores :black_nib:
