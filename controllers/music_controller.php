@@ -1,8 +1,7 @@
 <?php
 
     //Compruebo si ya hay una sesion establecida con una cookie
-    //if (isset($_COOKIE["username"]) && isset($_COOKIE["passcode"])) {
-    if (isset($_COOKIE) && isset($_COOKIE["user"])) {
+    if (isset($_COOKIE["username"]) && isset($_COOKIE["passcode"])) {
         require_once("models/Validar.php");
         $validar = validarDatos();
 
