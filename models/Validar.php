@@ -1,6 +1,7 @@
 <?php 
 
  #Lucas Fadavi Solanilla
+
     require_once __DIR__ ."/../db/db.php";
 
         function validarDatos() {
