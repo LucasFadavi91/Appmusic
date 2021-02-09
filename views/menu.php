@@ -1,5 +1,7 @@
 <?php
 
+ #Lucas Fadavi Solanilla
+
 //Esto es para chequear si el usuario sigue logeado o existe una cookie
 if (isset($_COOKIE) && isset($_COOKIE["user"]) === false) {
   exit("No estas logeado, datos incorrectos.");
