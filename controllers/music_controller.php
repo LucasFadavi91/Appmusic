@@ -1,5 +1,7 @@
 <?php
 
+ #Lucas Fadavi Solanilla
+
     //Compruebo si ya hay una sesion establecida con una cookie
     if (isset($_COOKIE["username"]) && isset($_COOKIE["passcode"])) {
         require_once("models/Validar.php");
