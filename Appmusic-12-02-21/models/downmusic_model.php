@@ -32,7 +32,7 @@ function listaCanciones(){
 # Alex Santana
 function tablaCanciones($listaCarrito){
 		global $conexion;
-        echo "<strong class=''>Detalle de la Orden</strong>
+        echo "<div class='mover1'><p class='titu'><strong class='titu'>Detalle de la Orden</strong></p>
             <table> 
                 <tr>
                     <th>Título</th>
@@ -47,7 +47,7 @@ function tablaCanciones($listaCarrito){
 			echo "<td>".$value["precio"]."</td>";			
             echo "</tr>";
         }
-        echo "</table>";
+        echo "</table></div>";
 }
 
 
