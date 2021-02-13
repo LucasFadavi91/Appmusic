@@ -1,7 +1,7 @@
 <!--Alex Santana-->
 <?php
 	require_once("../db/db.php");
-    include_once("../controllers/downmusic_controller.php");
+    	include_once("../controllers/downmusic_controller.php");
 ?>
 <!doctype html>
 <html lang="es">
@@ -68,7 +68,7 @@
 					<?php
 						//Se lista los nombres de las canciones  en un select
 						foreach($musica as $lista){
-                            echo "<option value='".$lista['Name']."'>".$lista['Name']." - ".$lista['Composer']."</option>";
+                            				echo "<option value='".$lista['Name']."'>".$lista['Name']." - ".$lista['Composer']."</option>";
                         }
 					?>
 					</select>&nbsp;&nbsp&nbsp<br><br>
@@ -82,6 +82,5 @@
 </div>
 	<a href="../index.php" class="cerrar"><input type="button" value="Cerrar Sesi&oacute;n"></a>
 </body>
-
 </html>
 
