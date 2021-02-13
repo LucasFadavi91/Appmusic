@@ -23,7 +23,6 @@ function listaCanciones(){
 
 
 
-
 # Función 'precioCancion'. 
 # Parámetros: $tema, será el título o canción que se pase como parámetro para poder obtener el precio de este y poder almacenar el valor del precio en la $_COOKIE["carrito"]
 # 	
@@ -59,6 +58,25 @@ function precioTitulo($listaCarrito){
 }
 
 
+# Función 'ObtenerOrden'. 
+# Parámetros: 
+# 	
+# Funcionalidad: Conectar con la bbdd, obtener el InvoiceId max y crear uno nuevo
+# 
+# Return: devuelve un nuevo nº de orden
+#
+# Alex Santana
+function obtenerOrden(){
+	global $conexion;
+	$newOrder="SELECT max(InvoiceId) as mayor FROM invoice";
+	$stmt=$conexion->prepare($newOrder);
+	$stmt->execute();
+	$totalOrder=$stmt->fetchAll(PDO::FETCH_ASSOC);
+	foreach($totalOrder as $order){
+		$orderNew=$order["mayor"]+1;
+	}
+	return $orderNew;
+}
 
 # Función 'comprar'. 
 # Parámetros: $price, será el precio total que se ha pagado por los productso almacenados en el carrito
@@ -86,6 +104,10 @@ function comprar($price){
 	$sqlOrder="INSERT INTO invoice values('$orderNew',12,'$fecha',null,null,null,null,null,'$price')";
 	$conexion->exec($sqlOrder);
 }
+
+
+
+
 
 
 
