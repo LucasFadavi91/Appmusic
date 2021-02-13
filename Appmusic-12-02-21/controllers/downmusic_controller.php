@@ -120,7 +120,7 @@ require_once("../views/downmusic_view.php");
 	
 
 
-//---------------------------------FUNCIONES------------------------------------///
+//---------------------------------FUNCIONES----------------------------------------///
 # Función 'tablaCanciones'. 
 # Parámetros: $listaCarrito, serán los valores que se han agregado a la $_COOKIE["carrito"] para poder acceder a ellos más facilmente y hacer uso de ellos
 # 	
