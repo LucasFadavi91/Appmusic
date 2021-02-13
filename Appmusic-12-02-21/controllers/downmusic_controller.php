@@ -1,4 +1,3 @@
-<!--Alexander Santana-->
 <meta charset="utf-8" />
 <style>
 .error{
@@ -78,7 +77,8 @@ if (!empty($_COOKIE["user"])) {
 	//2º si se hace click en el input ver y si la cookie carrito no esta vacía (se muestra la tablaProductos y el precio total de estos)
 
 	if(isset($_POST["ver"])){
-		if(!empty($_COOKIE["carrito"])){
+		if(!empty($_COOKIE["carrito"])){	
+			//Visualizo la tabla 
 			tablaCanciones($listaCarrito);
 			echo "<br>";
 			//Se saca el precio total a pagar de los productos
@@ -101,11 +101,11 @@ if (!empty($_COOKIE["user"])) {
 	}
 
 	///Comprar
-	if(isset($_POST["pagar"])){
+	if(isset($_POST["paga"])){
 		if(!empty($_COOKIE["carrito"])){
-			$totalPrecio2=precioTitulo($listaCarrito);
 			$cancionPrice=precioTitulo($listaCarrito);
 			comprar($cancionPrice);
+			
 		} else{
 			echo "<p class='error'>No has agregado ningún artículo al carrito</p>";
 		}
@@ -114,13 +114,16 @@ if (!empty($_COOKIE["user"])) {
 	
 	header("location:../index.php");
 	}		
-			
+	
+
 //Llamada a la vista, intermediario entre vista y modelo
 require_once("../views/downmusic_view.php");
 	
-
-
-//---------------------------------FUNCIONES----------------------------------------///
+	
+	
+	
+	
+//---------------------------------FUNCIONES------------------------------------///
 # Función 'tablaCanciones'. 
 # Parámetros: $listaCarrito, serán los valores que se han agregado a la $_COOKIE["carrito"] para poder acceder a ellos más facilmente y hacer uso de ellos
 # 	
@@ -130,7 +133,10 @@ require_once("../views/downmusic_view.php");
 #
 # Alex Santana
 function tablaCanciones($listaCarrito){
-        echo "<div class='mover1'><p class='titu'><strong class='titu'>Detalle de la Orden</strong></p>
+		//Llamo a la funcion ObtenerOrden() y Obtengo el nº del pedido
+		$numOrden=obtenerOrden();
+		
+        echo "<div class='mover1'><p class='titu'><strong class='titu'>Detalle de la Orden: $numOrden</strong></p>
             <table> 
                 <tr>
                     <th>Título</th>
@@ -147,4 +153,6 @@ function tablaCanciones($listaCarrito){
         }
         echo "</table></div>";
 }
+
+	
 ?>
