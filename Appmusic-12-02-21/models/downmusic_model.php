@@ -86,9 +86,8 @@ function obtenerOrden(){
 # Return: 
 #
 # Alex Santana
-function comprar($price){
+function comprar($price,$userId){
 	global $conexion;
-	//$idUser=$_COOKIE["usuario"]; //Se utilizará más adelante
 	//Fomato para la fecha del sistema
 	$fecha=getdate()["year"]."-".getdate()["mon"]."-".getdate()["mday"];
 	//Consulta para insertar los datos a la tabla invoice, sacar el mayor invoiceid, para poder crear una nueva orden con el siguiente nº
@@ -101,7 +100,7 @@ function comprar($price){
 	}
 	
 	//Incluir datos de la compra
-	$sqlOrder="INSERT INTO invoice values('$orderNew',12,'$fecha',null,null,null,null,null,'$price')";
+	$sqlOrder="INSERT INTO invoice values('$orderNew','$userId','$fecha',null,null,null,null,null,'$price')";
 	$conexion->exec($sqlOrder);
 }
 
