@@ -2,9 +2,15 @@
 <style>
 .error{
 	color:red;
+	position:absolute;
+	//margin-left:10%;
+	top:29%;
 	}
 .ok{
 	color:green;
+	position:absolute;
+	//margin-left:10%;
+	top:29%;
 }
 .mover{
 	postion:absolute;
@@ -12,15 +18,32 @@
 	top: 74%;
 	
 }
+.mover2{
+		position:absolute;
+		//margin-left:19%;
+		top:28%;
+}
+
+.btnvaciar{
+	position:absolute;
+		margin-left:7%;
+		
+		top:95%;
+}
+
+.paga{
+		position:absolute;
+		margin-left:11%;
+		top:30%;
+}
 </style>
 <?php
-
 
 //Llamada al modelo, intermediario entre vista y modelo
 require_once("../models/downmusic_model.php");
 //Si el usuario esta logeado (cookie -> usuario) procede  a listar todas las canciones y proceder con la compra
 if (!empty($_COOKIE["user"])) {
-   
+   echo '<form name"prueba" action="" method="post">';
 	//Llamada a la vista, intermediario entre vista y modelo
 	//Se obtiene la lista de las canciones para mostrarlas en la vista downmusic.php
 	$musica=listaCanciones();
@@ -31,13 +54,12 @@ if (!empty($_COOKIE["user"])) {
 	//Si existe la cookie carrito, se desiariliza para obtener los datos posteriomente y hacer uso de ellos  
 	if(isset($_COOKIE["carrito"])){
 		$listaCarrito=unserialize($_COOKIE['carrito']);
-	} else{ //En caso de no existir la cookie carrito o usuario (se añadirá posteriormente) redirigirá a la página de login
-	//header('Location: http://www.example.com/');
 	}
-
+	
+	
 	//1º Añadir al carrito
 	if (isset($_POST["agregar"])){
-		if(isset($_POST["producto"])){
+		if(!empty($_POST["producto"][0])){//Si  se selecciona un producto de la lista se añade al carrito dicho producto
 			$ultimaPos=count($listaCarrito);
 			$listaCarrito[$ultimaPos]["cancion"]= $_POST["producto"];
 			$listaCarrito[$ultimaPos]["cantidad"]= $_POST["cantidad"];
@@ -46,6 +68,8 @@ if (!empty($_COOKIE["user"])) {
 			setcookie("carrito", serialize($listaCarrito), time() + (86400 * 10), '/');
 		
 			echo "<p class='ok'><strong>Título agregado al carrito</strong></p><br><br>";
+		} else {
+			echo "<p class='error'>Debes seleccionar un producto</p>";
 		}
 	}
 		
@@ -58,13 +82,15 @@ if (!empty($_COOKIE["user"])) {
 			echo "<br>";
 			//Se saca el precio total a pagar de los productos
 			$totalPrecio=precioTitulo($listaCarrito);
-			echo "Total a pagar: <strong>$totalPrecio €</strong><br><br>";
-			//echo '<input class="" type="submit" name="vaciar" value="Vaciar carrito">';
+			echo "<p class='mover2'>Total a pagar: <strong>$totalPrecio €</strong></p><br><br>";
+			
+			echo '<input class="btnvaciar" type="submit" name="vaciar" value="Vaciar carrito">
+			</from>';
 			echo "<br>";
-			//echo "<label>Tarjeta de cr&eacute;dito</label> <input type='text' name='card' value=''>&nbsp;&nbsp;"; //NO FUNCIONA $_POST[""] de estos input´s (¿SOLUCIÓN?)
-			//echo '<input class="" type="submit" name="paga" value="Finalizar compra">';
+			//echo "<label>Tarjeta de cr&eacute;dito</label> <input type='text' name='card' value=''>&nbsp;&nbsp;";
+			echo '<input class="paga" type="submit" name="paga" value="Pago Seguro">';
 		}else {
-			echo "<p class='error'>No hay títulos añadidos al carrito</p><br><br>";
+			echo "<p class='error'>No hay productos añadidos al carrito</p><br><br>";
 		}	
 	}
 
@@ -84,7 +110,7 @@ if (!empty($_COOKIE["user"])) {
 		}
 	}
 } else{ //Si no existe la $_COOKIE["usuario"], es decir el usuario no esta logeado, volverá a la pág de login.php para logearse
-	//exit("No estas logeado, datos incorrectos."); 
+	
 	header("location:../views/login.php");
 	}		
 			
