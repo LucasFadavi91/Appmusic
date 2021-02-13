@@ -22,33 +22,6 @@ function listaCanciones(){
 }
 
 
-# Función 'tablaCanciones'. 
-# Parámetros: $listaCarrito, serán los valores que se han agregado a la $_COOKIE["carrito"] para poder acceder a ellos más facilmente y hacer uso de ellos
-# 	
-# Funcionalidad: Obtener en formato tabla, el Name de la cancion, la cantidad que se haya seleccionado desde el select de algún título y el precio de cada título que se seleccione
-# 
-# Return: 
-#
-# Alex Santana
-function tablaCanciones($listaCarrito){
-		global $conexion;
-        echo "<div class='mover1'><p class='titu'><strong class='titu'>Detalle de la Orden</strong></p>
-            <table> 
-                <tr>
-                    <th>Título</th>
-                    <th>Cantidad</th>
-					<th>Precio por unidad</th>
-                </tr>";
-
-        foreach($listaCarrito as $value){
-            echo "<tr>";
-            echo "<td> ".$value["cancion"]. "</td>";
-            echo "<td>".$value["cantidad"]."</td>";	
-			echo "<td>".$value["precio"]."</td>";			
-            echo "</tr>";
-        }
-        echo "</table></div>";
-}
 
 
 # Función 'precioCancion'. 
