@@ -111,7 +111,7 @@ if (!empty($_COOKIE["user"])) {
 	}
 } else{ //Si no existe la $_COOKIE["usuario"], es decir el usuario no esta logeado, volverá a la pág de login.php para logearse
 	
-	header("location:../views/login.php");
+	header("location:../index.php");
 	}		
 			
 //Llamada a la vista, intermediario entre vista y modelo
