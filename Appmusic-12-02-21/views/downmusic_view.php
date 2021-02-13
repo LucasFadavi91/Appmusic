@@ -1,7 +1,7 @@
 <!--Alex Santana-->
 <?php
 	require_once("../db/db.php");
-    	include_once("../controllers/downmusic_controller.php");
+    include_once("../controllers/downmusic_controller.php");
 ?>
 <!doctype html>
 <html lang="es">
@@ -46,6 +46,12 @@
 		
 	}
 	
+	.volver{
+		position:absolute;
+		top:-29.9px;
+		margin-left:3px;
+	}
+	
 </style>
    
 </head>
@@ -70,6 +76,7 @@
 					<input type="number" name="cantidad" placeholder="Cantidad" value="1"><br><br>
 					<input type="submit" name="agregar" value="Añadir al carrito">
 					<input type="submit" name="ver" value="Finalizar compra">
+					<a href="menu.php" class="cerrar"><input type="button" value="Volver al menú" class="volver"></a>
 					<br><br>
 	</form>
 </div>
