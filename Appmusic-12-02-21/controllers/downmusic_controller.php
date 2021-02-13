@@ -88,7 +88,6 @@ if (!empty($_COOKIE["user"])) {
 			echo '<input class="btnvaciar" type="submit" name="vaciar" value="Vaciar carrito">
 			</from>';
 			echo "<br>";
-			//echo "<label>Tarjeta de cr&eacute;dito</label> <input type='text' name='card' value=''>&nbsp;&nbsp;";
 			echo '<input class="paga" type="submit" name="paga" value="Pago Seguro">';
 		}else {
 			echo "<p class='error'>No hay productos añadidos al carrito</p><br><br>";
@@ -103,9 +102,12 @@ if (!empty($_COOKIE["user"])) {
 	///Comprar
 	if(isset($_POST["paga"])){
 		if(!empty($_COOKIE["carrito"])){
+			//Obtengo el id del usuario
+			$userId=$_COOKIE["user"];
 			$cancionPrice=precioTitulo($listaCarrito);
-			comprar($cancionPrice);
-			
+			comprar($cancionPrice, $userId);
+			//Se reinicia el carrito
+			setcookie("carrito", serialize($listaCarrito), time() + (-86400 * 10), '/');
 		} else{
 			echo "<p class='error'>No has agregado ningún artículo al carrito</p>";
 		}
@@ -154,4 +156,5 @@ function tablaCanciones($listaCarrito){
         echo "</table></div>";
 }
 
+	
 ?>
