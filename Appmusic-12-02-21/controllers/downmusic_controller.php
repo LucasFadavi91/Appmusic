@@ -154,5 +154,4 @@ function tablaCanciones($listaCarrito){
         echo "</table></div>";
 }
 
-	
 ?>
