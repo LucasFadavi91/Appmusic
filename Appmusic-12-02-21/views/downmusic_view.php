@@ -82,6 +82,5 @@
 </div>
 	<a href="../index.php" class="cerrar"><input type="button" value="Cerrar Sesi&oacute;n"></a>
 </body>
-
 </html>
 
