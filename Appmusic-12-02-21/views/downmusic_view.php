@@ -1,130 +1,87 @@
-<?php 
-//La lógica vendrá aquí, funciones que se comunican con la bbdd
-
-//------------------------------------------------------------------------------------//
-
-//CANCIONES
-# Función 'listaCanciones'. 
-# Parámetros: 
-# 	
-# Funcionalidad: Se prepara una consulta sql del Name y Composer de la tabla track 
-# 
-# Return: Devuelve todas las filas de la tabla track con el nombre y el composer
-#
-# Alex Santana
-function listaCanciones(){
-	global $conexion;
-	$sql="SELECT Name, Composer FROM track ";
-	$stmt=$conexion->prepare($sql);
-	$stmt->execute();
-	$listaM=$stmt->fetchAll(PDO::FETCH_ASSOC);
-	return $listaM;
-}
-
-
-
-# Función 'precioCancion'. 
-# Parámetros: $tema, será el título o canción que se pase como parámetro para poder obtener el precio de este y poder almacenar el valor del precio en la $_COOKIE["carrito"]
-# 	
-# Funcionalidad: Obtener el precio de una canción o título en concreto que se haya seleccionado y agregado a la $_COOKIE["carrito"] 
-# 
-# Return: 
-#
-# Alex Santana
-function precioCancion($tema){
-	global $conexion;
-	$sql="SELECT UnitPrice FROM track WHERE Name='$tema'";
-	$stmt=$conexion->prepare($sql);
-	$stmt->execute();
-	$totalPrecio=$stmt->fetchColumn();
-	return $totalPrecio;
-}
-
-
-# Función 'precioTitulo'. 
-# Parámetros: $listaCarrito array de la $_COOKIE["carrito"], la cual se accede para poder recorrerlo y poder sacar el valor de la cantidad y el precio para poder obtener el precio total a pagar de los productos que se hayan almacenado en el carrito de la compra
-# 	
-# Funcionalidad: Desiarilizar el array $listaCarrito de $_COOKIE["carrito"] para poder recorrer el array 
-# 
-# Return: Devuelto el precio total a pagar 
-#
-# Alex Santana
-function precioTitulo($listaCarrito){
-	$totalPrecio=0;
-	foreach ($listaCarrito as $key => $value) {
-		$totalPrecio=$totalPrecio+($value["cantidad"]*$value["precio"]);
+<!--Alex Santana-->
+<?php
+	require_once("../db/db.php");
+    include_once("../controllers/downmusic_controller.php");
+?>
+<!doctype html>
+<html lang="es">
+<head> 
+<title>Comprar productos</title>
+<meta charset="utf-8" />
+<style type="text/css">
+	table {border-collapse: collapse;
+		}
+	th, td {border: 1px solid #dddddd;
+			width:40%;
+			text-align:center;}
+		.error{
+	color:red;
 	}
-	return $totalPrecio;
-}
-
-
-# Función 'ObtenerOrden'. 
-# Parámetros: 
-# 	
-# Funcionalidad: Conectar con la bbdd, obtener el InvoiceId max y crear uno nuevo
-# 
-# Return: devuelve un nuevo nº de orden
-#
-# Alex Santana
-function ObtenerOrden(){
-	global $conexion;
-	$newOrder="SELECT max(InvoiceId) as mayor FROM invoice";
-	$stmt=$conexion->prepare($newOrder);
-	$stmt->execute();
-	$totalOrder=$stmt->fetchAll(PDO::FETCH_ASSOC);
-	foreach($totalOrder as $order){
-		$orderNew=$order["mayor"]+1;
-	}
-	return $orderNew;
-}
-
-# Función 'comprar'. 
-# Parámetros: $price, será el precio total que se ha pagado por los productso almacenados en el carrito
-# 	
-# Funcionalidad: Conectar con la bbdd, obtener el formato de fecha y hora del sistema de la bbdd, generar una consulta sql para insertar una nueva orden en la tabla invoice, cogiendo el nº mayor de InvoiceId y sumar 1. Posteriormente se introducen los datos de la compra en la tabla invoice.
-# 
-# Return: 
-#
-# Alex Santana
-function comprar($price){
-	global $conexion;
-	//$idUser=$_COOKIE["usuario"]; //Se utilizará más adelante
-	//Fomato para la fecha del sistema
-	$fecha=getdate()["year"]."-".getdate()["mon"]."-".getdate()["mday"];
-	//Consulta para insertar los datos a la tabla invoice, sacar el mayor invoiceid, para poder crear una nueva orden con el siguiente nº
-	$newOrder="SELECT max(InvoiceId) as mayor FROM invoice";
-	$stmt=$conexion->prepare($newOrder);
-	$stmt->execute();
-	$totalOrder=$stmt->fetchAll(PDO::FETCH_ASSOC);
-	foreach($totalOrder as $order){
-		$orderNew=$order["mayor"]+1;
+	.tit{
+		position:relative;
+		right: 165px;
 	}
 	
-	//Incluir datos de la compra
-	$sqlOrder="INSERT INTO invoice values('$orderNew',12,'$fecha',null,null,null,null,null,'$price')";
-	$conexion->exec($sqlOrder);
-}
-
-
-
-
-
-
-
-function factura(){
-	global $conexion;
-	$newOrder="SELECT max(InvoiceId) as mayor FROM invoice";
-	$stmt=$conexion->prepare($newOrder);
-	$stmt->execute();
-	$totalOrder=$stmt->fetchAll(PDO::FETCH_ASSOC);
-	foreach($totalOrder as $order){
-		$orderNew=$order["mayor"]+1;
+	.mover1{
+		position:absolute;
+		margin-left:30%;
+		top:45%;
+		//display: flex;
+  
 	}
-	return $orderNew;
-}
+	.menu{
+		//border:1px dashed red;
+		position:absolute;
+		bottom:70%;
+		//text-align: center;
+	}
+	.cerrar{
+		position:absolute;
+		//margin-left:30%;
+		top:95%;
+	}
+	.titu{
+		color:blue;
+		text-align:center;
+		
+	}
+	
+	.volver{
+		position:absolute;
+		top:-29.9px;
+		margin-left:3px;
+	}
+	
+</style>
+   
+</head>
 
+<body>
+<div class="menu">
+	<h1>Realizar Pedidos</h1>
+	<!--<?php echo "<h2>Usuario: ".$_SESSION["usuario"]."</h2>";?>-->
+	
+	<form  name"prueba" action="<?php echo $_SERVER['PHP_SELF']; ?> " method="post">
+		
+			Título  <select name="producto">
+					<option value="0">--Selecciona una canción--</option>
+					<?php
+						//Se lista los nombres de las canciones  en un select
+						foreach($musica as $lista){
+                            echo "<option value='".$lista['Name']."'>".$lista['Name']." - ".$lista['Composer']."</option>";
+                        }
+					?>
+					</select>&nbsp;&nbsp&nbsp<br><br>
+					<label>Cantidad</label>
+					<input type="number" name="cantidad" placeholder="Cantidad" value="1"><br><br>
+					<input type="submit" name="agregar" value="Añadir al carrito">
+					<input type="submit" name="ver" value="Finalizar compra">
+					<a href="menu.php" class="cerrar"><input type="button" value="Volver al menú" class="volver"></a>
+					<br><br>
+	</form>
+</div>
+	<a href="../index.php" class="cerrar"><input type="button" value="Cerrar Sesi&oacute;n"></a>
+</body>
 
+</html>
 
-
-
-?>
