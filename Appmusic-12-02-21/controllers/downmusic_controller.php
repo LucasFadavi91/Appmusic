@@ -130,7 +130,6 @@ require_once("../views/downmusic_view.php");
 #
 # Alex Santana
 function tablaCanciones($listaCarrito){
-		//global $conexion;
         echo "<div class='mover1'><p class='titu'><strong class='titu'>Detalle de la Orden</strong></p>
             <table> 
                 <tr>
