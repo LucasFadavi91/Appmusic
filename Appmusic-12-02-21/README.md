@@ -1,6 +1,6 @@
 # Appmusic :musical_note:
 Repositorio que contiene el desarrollo de la app Webmusical.
-# Filosofia :blue_book:
+# Filosofía :blue_book:
 En Graphicscodeldv creemos que pese a estar en un sector tan amplio, con tanta variedad y con un margen de posibilidades inmeso
 lo mas importante es el trato con nuestros clientes porque creemos firmemente que nuestra transparencia, metodologia de trabajo
 y sencillez nos hacen brillar con luz propia. En nuestros inicios crecimos con una idea muy clara de lo que queriamos hacer
