@@ -2,6 +2,7 @@
 <?php
 	require_once("../db/db.php");
     include_once("../controllers/downmusic_controller.php");
+
 ?>
 <!doctype html>
 <html lang="es">
@@ -80,7 +81,9 @@
 					<br><br>
 	</form>
 </div>
-	<a href="../index.php" class="cerrar"><input type="button" value="Cerrar Sesi&oacute;n"></a>
+	<form name"cerrar" action="<?php echo $_SERVER['PHP_SELF']; ?> " method="post">
+	<a href="../index.php" class="cerrar" ><input type="submit" name="cerrar" value="Cerrar Sesi&oacute;n"></a>
+	</form>
 </body>
 </html>
 
