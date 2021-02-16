@@ -36,6 +36,14 @@
 		margin-left:11%;
 		top:30%;
 }
+	
+.exito{
+	color:green;
+	position:absolute;
+	
+	top:29%;
+	
+}
 </style>
 <?php
 
@@ -106,6 +114,7 @@ if (!empty($_COOKIE["user"])) {
 			$userId=$_COOKIE["user"];
 			$cancionPrice=precioTitulo($listaCarrito);
 			comprar($cancionPrice, $userId);
+			echo "<p class='exito'><strong>Compra realizada con exito!</strong></p>";
 			//Se reinicia el carrito
 			setcookie("carrito", serialize($listaCarrito), time() + (-86400 * 10), '/');
 		} else{
