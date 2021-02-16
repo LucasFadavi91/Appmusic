@@ -82,7 +82,7 @@
 	</form>
 </div>
 	<form name"cerrar" action="<?php echo $_SERVER['PHP_SELF']; ?> " method="post">
-	<a href="../index.php" class="cerrar" ><input type="submit" name="cerrar" value="Cerrar Sesi&oacute;n"></a>
+	<input type="submit" class="cerrar" name="cerrar" value="Cerrar Sesi&oacute;n">
 	</form>
 </body>
 </html>
