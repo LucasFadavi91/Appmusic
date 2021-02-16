@@ -36,6 +36,14 @@
 		margin-left:11%;
 		top:30%;
 }
+
+.exito{
+	color:green;
+	position:absolute;
+	
+	top:29%;
+	
+}
 </style>
 <?php
 
@@ -43,6 +51,7 @@
 require_once("../models/downmusic_model.php");
 //Si el usuario esta logeado (cookie -> usuario) procede  a listar todas las canciones y proceder con la compra
 if (!empty($_COOKIE["user"])) {
+	
    echo '<form name"prueba" action="" method="post">';
 	//Llamada a la vista, intermediario entre vista y modelo
 	//Se obtiene la lista de las canciones para mostrarlas en la vista downmusic.php
@@ -106,15 +115,25 @@ if (!empty($_COOKIE["user"])) {
 			$userId=$_COOKIE["user"];
 			$cancionPrice=precioTitulo($listaCarrito);
 			comprar($cancionPrice, $userId);
+			echo "<p class='exito'><strong>Compra realizada con exito!</strong></p>";
 			//Se reinicia el carrito
 			setcookie("carrito", serialize($listaCarrito), time() + (-86400 * 10), '/');
 		} else{
 			echo "<p class='error'>No has agregado ningún artículo al carrito</p>";
 		}
 	}
-} else{ //Si no existe la $_COOKIE["usuario"], es decir el usuario no esta logeado, volverá a la pág de login.php para logearse
 	
-	header("location:../index.php");
+	//Cerrar sesion
+	if(isset($_POST["cerrar"])){
+		//echo "Bien!";
+		//setcookie("carrito", serialize($listaCarrito), time() + (0), '/');
+		setcookie("carrito", serialize($listaCarrito), time() - (86400 * 10), '/');
+		
+		//unset($_COOKIE["carrito"]);
+	}
+} else{ //Si no existe la $_COOKIE["usuario"], es decir el usuario no esta logeado, volverá a la pág de login.php para logearse
+		header("location:../index.php");
+		
 	}		
 	
 
@@ -157,4 +176,19 @@ function tablaCanciones($listaCarrito){
 }
 
 	
+# Función 'precioTitulo'. 
+# Parámetros: $listaCarrito array de la $_COOKIE["carrito"], la cual se accede para poder recorrerlo y poder sacar el valor de la cantidad y el precio para poder obtener el precio total a pagar de los productos que se hayan almacenado en el carrito de la compra
+# 	
+# Funcionalidad: Desiarilizar el array $listaCarrito de $_COOKIE["carrito"] para poder recorrer el array 
+# 
+# Return: Devuelto el precio total a pagar 
+#
+# Alex Santana
+function precioTitulo($listaCarrito){
+	$totalPrecio=0;
+	foreach ($listaCarrito as $key => $value) {
+		$totalPrecio=$totalPrecio+($value["cantidad"]*$value["precio"]);
+	}
+	return $totalPrecio;
+}
 ?>
