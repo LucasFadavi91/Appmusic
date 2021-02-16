@@ -123,20 +123,15 @@ if (!empty($_COOKIE["user"])) {
 		}
 	}
 	
-	//Cerrar sesion
+	//Al hacer click en cerrar sesión, redirigirá al index y vaciará eñ carrito de compras
 	if(isset($_POST["cerrar"])){
-		//echo "Bien!";
-		//setcookie("carrito", serialize($listaCarrito), time() + (0), '/');
+		header("location:../index.php");
 		setcookie("carrito", serialize($listaCarrito), time() - (86400 * 10), '/');
-		
-		//unset($_COOKIE["carrito"]);
 	}
 } else{ //Si no existe la $_COOKIE["usuario"], es decir el usuario no esta logeado, volverá a la pág de login.php para logearse
 		header("location:../index.php");
-		
 	}		
 	
-
 //Llamada a la vista, intermediario entre vista y modelo
 require_once("../views/downmusic_view.php");
 	
