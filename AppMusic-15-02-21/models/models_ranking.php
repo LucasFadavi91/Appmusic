@@ -18,7 +18,7 @@ function verDescargas($cliente,$fecha_inicio,$fecha_final){
     FROM track
     JOIN invoiceline ON invoiceline.Trackid = track.TrackId
     JOIN invoice ON invoiceline.InvoiceId = invoice.InvoiceId
-    where InvoiceDate >=:fechainicio AND InvoiceDate <=:fechafinal
+    where (InvoiceDate >=:fechainicio AND InvoiceDate <=:fechafinal) AND CustomerId = $cliente
     GROUP BY invoiceline.TrackId
     ORDER BY Descargas DESC , invoiceline.trackid ASC");
     $consulta->bindParam(":fechainicio",$fecha_inicio);

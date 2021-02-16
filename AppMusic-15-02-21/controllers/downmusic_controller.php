@@ -36,14 +36,6 @@
 		margin-left:11%;
 		top:30%;
 }
-	
-.exito{
-	color:green;
-	position:absolute;
-	
-	top:29%;
-	
-}
 </style>
 <?php
 
@@ -114,7 +106,6 @@ if (!empty($_COOKIE["user"])) {
 			$userId=$_COOKIE["user"];
 			$cancionPrice=precioTitulo($listaCarrito);
 			comprar($cancionPrice, $userId);
-			echo "<p class='exito'><strong>Compra realizada con exito!</strong></p>";
 			//Se reinicia el carrito
 			setcookie("carrito", serialize($listaCarrito), time() + (-86400 * 10), '/');
 		} else{
@@ -163,23 +154,6 @@ function tablaCanciones($listaCarrito){
             echo "</tr>";
         }
         echo "</table></div>";
-}
-
-
-# Función 'precioTitulo'. 
-# Parámetros: $listaCarrito array de la $_COOKIE["carrito"], la cual se accede para poder recorrerlo y poder sacar el valor de la cantidad y el precio para poder obtener el precio total a pagar de los productos que se hayan almacenado en el carrito de la compra
-# 	
-# Funcionalidad: Desiarilizar el array $listaCarrito de $_COOKIE["carrito"] para poder recorrer el array 
-# 
-# Return: Devuelto el precio total a pagar 
-#
-# Alex Santana
-function precioTitulo($listaCarrito){
-	$totalPrecio=0;
-	foreach ($listaCarrito as $key => $value) {
-		$totalPrecio=$totalPrecio+($value["cantidad"]*$value["precio"]);
-	}
-	return $totalPrecio;
 }
 
 	
