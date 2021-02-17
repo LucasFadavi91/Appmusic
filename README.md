@@ -8,7 +8,7 @@ y a donde queriamos llegar, a dia de hoy podemos mirar atras con orgullo porque 
 siempre intentado evolucionar y mejorar segun lo ha ido demandando el sector del desarrollo, cuando hablamos de Graphicscodeldv
 sin duda hablamos de compromiso, esfuerzo, dedicacion, trabajo y amor por lo que hacemos, eso es lo que ofrecemos y lo que nos define.
 # Instrucciones de uso / Instalación :bookmark_tabs:
-Actualmente sin definir.
+Acceder desde un servidor web local a traves del navegador.
 # Desarrollado con: :low_brightness:
 En principio no se va a utilizar ningun framework especifico pero el desarrollo
 estara basado en el modelo vista controlador.
@@ -19,7 +19,8 @@ que fuera necesario, se va a ir versionando el codigo en diferentes branchs que 
 corresponder con cada dia de trabajo/desarrollo del proyecto, la versión final estara 
 en el main.
 # Despliegue  :mailbox_closed:
-Por determinar.
+Descargar el zip de la ultima versión mas actualizada del repositorio de Github y descomprimir dentro del directorio
+correspondiente del servidor web que estes utilizando, en nuestro caso wamp64/www/....tu directorio.
 # Autores :black_nib:
 :small_blue_diamond: Lucas Fadavi
 
