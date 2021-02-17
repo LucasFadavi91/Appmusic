@@ -51,7 +51,6 @@
 require_once("../models/downmusic_model.php");
 //Si el usuario esta logeado (cookie -> usuario) procede  a listar todas las canciones y proceder con la compra
 if (!empty($_COOKIE["user"])) {
-	
    echo '<form name"prueba" action="" method="post">';
 	//Llamada a la vista, intermediario entre vista y modelo
 	//Se obtiene la lista de las canciones para mostrarlas en la vista downmusic.php
@@ -69,7 +68,9 @@ if (!empty($_COOKIE["user"])) {
 	//1º Añadir al carrito
 	if (isset($_POST["agregar"])){
 		if(!empty($_POST["producto"][0])){//Si  se selecciona un producto de la lista se añade al carrito dicho producto
+			$id=obtenerId($_POST["producto"]);
 			$ultimaPos=count($listaCarrito);
+			$listaCarrito[$ultimaPos]["trackID"]=$id;
 			$listaCarrito[$ultimaPos]["cancion"]= $_POST["producto"];
 			$listaCarrito[$ultimaPos]["cantidad"]= $_POST["cantidad"];
 			$precioCan=precioCancion($_POST["producto"]);
@@ -88,6 +89,7 @@ if (!empty($_COOKIE["user"])) {
 	if(isset($_POST["ver"])){
 		if(!empty($_COOKIE["carrito"])){	
 			//Visualizo la tabla 
+		
 			tablaCanciones($listaCarrito);
 			echo "<br>";
 			//Se saca el precio total a pagar de los productos
@@ -111,10 +113,17 @@ if (!empty($_COOKIE["user"])) {
 	///Comprar
 	if(isset($_POST["paga"])){
 		if(!empty($_COOKIE["carrito"])){
+
 			//Obtengo el id del usuario
 			$userId=$_COOKIE["user"];
 			$cancionPrice=precioTitulo($listaCarrito);
-			comprar($cancionPrice, $userId);
+			//Se obtiene el idinvoice y se insertan los datos en la tabla invoice
+			$invoiceId=comprar($userId, $cancionPrice);
+			
+			//Obtenemos el trackID
+			$trackId=trackId();
+			//Insertar datos en la tabla invoiceline
+			insertarInvoiceLine($invoiceId, $trackId);
 			echo "<p class='exito'><strong>Compra realizada con exito!</strong></p>";
 			//Se reinicia el carrito
 			setcookie("carrito", serialize($listaCarrito), time() + (-86400 * 10), '/');
@@ -123,12 +132,12 @@ if (!empty($_COOKIE["user"])) {
 		}
 	}
 	
-	//Al hacer click en cerrar sesión, redirigirá al index y vaciará eñ carrito de compras
+	//Al hacer click en cerrar sesión, redirigirá al index y vaciará el carrito de compras
 	if(isset($_POST["cerrar"])){
 		header("location:../index.php");
 		setcookie("carrito", serialize($listaCarrito), time() - (86400 * 10), '/');
 	}
-} else{ //Si no existe la $_COOKIE["usuario"], es decir el usuario no esta logeado, volverá a la pág de login.php para logearse
+} else{ //Si no existe la $_COOKIE["usuario"], es decir el usuario no esta logeado, volverá a la pág de login.php para volver a logearse
 		header("location:../index.php");
 	}		
 	
@@ -185,5 +194,13 @@ function precioTitulo($listaCarrito){
 		$totalPrecio=$totalPrecio+($value["cantidad"]*$value["precio"]);
 	}
 	return $totalPrecio;
+}
+
+
+///
+function obtenerId($track){
+    $datos = explode('#', $track);
+    $trackId = $datos[0];
+    return $trackId;
 }
 ?>
