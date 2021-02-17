@@ -5,7 +5,6 @@ include_once("../db/db.php");
 
 
 function verFacturas($id, $fechaini, $fechafin){
-
     # Función 'verFacturas'. 
     # Parámetros: 
     # 	- $id 
