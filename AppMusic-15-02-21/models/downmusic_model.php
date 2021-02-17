@@ -1,3 +1,4 @@
+
 <?php 
 //La lógica vendrá aquí, funciones que se comunican con la bbdd
 
@@ -14,12 +15,13 @@
 # Alex Santana
 function listaCanciones(){
 	global $conexion;
-	$sql="SELECT Name, Composer FROM track ";
+	$sql="SELECT TrackId, Name, Composer FROM track ";
 	$stmt=$conexion->prepare($sql);
 	$stmt->execute();
 	$listaM=$stmt->fetchAll(PDO::FETCH_ASSOC);
 	return $listaM;
 }
+
 
 
 
@@ -31,9 +33,9 @@ function listaCanciones(){
 # Return: 
 #
 # Alex Santana
-function precioCancion($tema){
+function precioCancion($trackId){
 	global $conexion;
-	$sql="SELECT UnitPrice FROM track WHERE Name='$tema'";
+	$sql="SELECT UnitPrice FROM track WHERE TrackId='$trackId'";
 	$stmt=$conexion->prepare($sql);
 	$stmt->execute();
 	$totalPrecio=$stmt->fetchColumn();
@@ -41,21 +43,7 @@ function precioCancion($tema){
 }
 
 
-# Función 'precioTitulo'. 
-# Parámetros: $listaCarrito array de la $_COOKIE["carrito"], la cual se accede para poder recorrerlo y poder sacar el valor de la cantidad y el precio para poder obtener el precio total a pagar de los productos que se hayan almacenado en el carrito de la compra
-# 	
-# Funcionalidad: Desiarilizar el array $listaCarrito de $_COOKIE["carrito"] para poder recorrer el array 
-# 
-# Return: Devuelto el precio total a pagar 
-#
-# Alex Santana
-function precioTitulo($listaCarrito){
-	$totalPrecio=0;
-	foreach ($listaCarrito as $key => $value) {
-		$totalPrecio=$totalPrecio+($value["cantidad"]*$value["precio"]);
-	}
-	return $totalPrecio;
-}
+
 
 
 # Función 'ObtenerOrden'. 
@@ -86,33 +74,84 @@ function obtenerOrden(){
 # Return: 
 #
 # Alex Santana
-function comprar($price,$userId){
+function comprar($userId, $price){
 	global $conexion;
 	//Fomato para la fecha del sistema
-	$fecha=getdate()["year"]."-".getdate()["mon"]."-".getdate()["mday"];
-	//Consulta para insertar los datos a la tabla invoice, sacar el mayor invoiceid, para poder crear una nueva orden con el siguiente nº
-	$newOrder="SELECT max(InvoiceId) as mayor FROM invoice";
-	$stmt=$conexion->prepare($newOrder);
-	$stmt->execute();
-	$totalOrder=$stmt->fetchAll(PDO::FETCH_ASSOC);
-	foreach($totalOrder as $order){
-		$orderNew=$order["mayor"]+1;
-	}
+	$fecha=getdate()['year']."-".getdate()['mon']."-".getdate()['mday']." ".getDate()['hours'].":".getDate()['minutes'].":".getDate()['seconds'];
+	//Obtener el invoiceid de la funcion obtenerOrden
+	$invoiceid=obtenerOrden();
 	
-	//Incluir datos de la compra
-	$sqlOrder="INSERT INTO invoice values('$orderNew','$userId','$fecha',null,null,null,null,null,'$price')";
+	//Obtener los datos de la tabla customer para posteriormente añadirlos a la tabla invoice
+	$sql="SELECT Address FROM Customer WHERE CustomerId='$userId'";
+	$stmt=$conexion->prepare($sql);
+	$stmt->execute();
+	$BillingAddress=$stmt->fetchColumn();
+	
+	$sql2="SELECT City FROM Customer WHERE CustomerId='$userId'";
+	$stmt=$conexion->prepare($sql2);
+	$stmt->execute();
+	$BillingCity=$stmt->fetchColumn();
+	
+	$sql3="SELECT State FROM Customer WHERE CustomerId='$userId'";
+	$stmt=$conexion->prepare($sql3);
+	$stmt->execute();
+	$BillingState=$stmt->fetchColumn();
+	
+	$sql4="SELECT Country FROM Customer WHERE CustomerId='$userId'";
+	$stmt=$conexion->prepare($sql4);
+	$stmt->execute();
+	$BillingCountry=$stmt->fetchColumn();
+	
+	$sql5="SELECT PostalCode FROM Customer WHERE CustomerId='$userId'";
+	$stmt=$conexion->prepare($sql5);
+	$stmt->execute();
+	$BillingPostalCode=$stmt->fetchColumn();
+	
+	//Incluir los datos a la tabla invoice
+	$sqlOrder="INSERT INTO invoice values('$invoiceid','$userId','$fecha','$BillingAddress', '$BillingCity', '$BillingState', '$BillingCountry', '$BillingPostalCode','$price')";
 	$conexion->exec($sqlOrder);
+
+	return $invoiceid;
+}
+
+function trackId(){
+	global $conexion;
+	$sql="SELECT TrackId FROM track";
+	$stmt=$conexion->prepare($sql);
+	$stmt->execute();
+	$listaM=$stmt->fetchColumn();
+	return $listaM;
 }
 
 
 
 
+function insertarInvoiceLine($idInvoice, $trackId){
+	global $conexion;
+	//Obtener nuevo InvoiceLineId
+	$newNumInvoiceLine="SELECT max(InvoiceLineId) as mayor2 FROM invoiceline";
+	$stmt=$conexion->prepare($newNumInvoiceLine);
+	$stmt->execute();
+	$NewNum=$stmt->fetchAll(PDO::FETCH_ASSOC);
+	foreach($NewNum as $order2){
+		$orderNewLine=$order2["mayor2"]+1;
+	}
+	 
+	$sql="SELECT UnitPrice FROM track WHERE TrackId='$trackId'";
+	$stmt=$conexion->prepare($sql);
+	$stmt->execute();
+	$precio=$stmt->fetchColumn();
+	
+	$newInvoiceLine="INSERT INTO invoiceline values('$orderNewLine', '$idInvoice', '$trackId', '$precio', '1')";
+	$conexion->exec($newInvoiceLine);
+}
 
 
 
+/*
 function factura(){
 	global $conexion;
-	$newOrder="SELECT max(InvoiceId) as mayor FROM invoice";
+	$newOrder="SELECT max(InvoiceId) as mayor FROM invoiceline";
 	$stmt=$conexion->prepare($newOrder);
 	$stmt->execute();
 	$totalOrder=$stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -120,7 +159,7 @@ function factura(){
 		$orderNew=$order["mayor"]+1;
 	}
 	return $orderNew;
-}
+}*/
 
 
 
