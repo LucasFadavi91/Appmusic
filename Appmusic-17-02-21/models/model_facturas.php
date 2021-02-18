@@ -19,7 +19,7 @@ function verFacturas($id, $fechaini, $fechafin){
 
    try {
        $consulta = $conexion->prepare("SELECT InvoiceDate, BillingAddress, BillingCity, BillingState, BillingCountry, BillingPostalCode, Total FROM invoice
-       WHERE customerId=$id AND InvoiceDate>=:fechainicio AND InvoiceDate<=:fechafinal ORDER BY InvoiceDate ASC") ;
+       WHERE customerId=$id AND InvoiceDate>=:fechainicio AND InvoiceDate<=:fechafinal ORDER BY InvoiceDate ASC");
 
        $consulta->bindParam(":fechainicio",$fechaini);
        $consulta->bindParam(":fechafinal",$fechafin);
